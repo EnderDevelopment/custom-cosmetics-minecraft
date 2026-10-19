@@ -1,0 +1,56 @@
+plugins {
+    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'maven-publish'
+}
+
+def mod_version = project.property('mod_version')
+
+def minecraft_version = project.property('minecraft_version')
+
+def loader_version = project.property('loader_version')
+
+def maven_group = project.property('maven_group')
+
+def archives_base_name = project.property('archives_base_name')
+
+def mod_id = archives_base_name
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = "https://maven.fabricmc.net/"
+    }
+}
+
+loom {
+    minecraftVersion = minecraft_version
+    mappings = 'official'
+    runConfigs.create('client') {
+        property 'fabric.development', 'true'
+        mainClass = 'net.fabricmc.api.client.ModInitializer'
+    }
+    runConfigs.create('server') {
+        property 'fabric.development', 'true'
+        mainClass = 'net.fabricmc.api.dedicatedserver.ModInitializer'
+    }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:${minecraft_version}'
+    mappings 'net.fabricmc:yarn:${minecraft_version}+build.1:v2'
+    modImplementation 'net.fabricmc:fabric-loader:${loader_version}'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.96.0+1.21'
+    include modImplementation('io.github.prospector:modmenu:8.0.0') {
+        transitive = false
+    }
+}
+
+processResources {
+    inputs.property 'version', mod_version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'fabric.mod.json'
+        expand 'version':project.property('mod_version')
+    }
+    into 'main'
+}

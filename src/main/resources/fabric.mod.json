@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "enderdev-cosmetics",
+  "version": "${version}",
+  "name": "EnderDev Cosmetics",
+  "description": "A mod that allows players to create, manage, and equip custom cosmetics like hats, wings, and capes.",
+  "authors": ["EnderDevelopment"],
+  "contact": {
+    "homepage": "https://example.com",
+    "sources": "https://github.com/EnderDevelopment/enderdev-cosmetics"
+  },
+  "license": "MIT",
+  "icon": "assets/enderdev-cosmetics/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.enderdevcosmetics.EnderDevCosmetics"
+    ],
+    "client": [
+      "com.example.enderdevcosmetics.client.EnderDevCosmeticsClient"
+    ]
+  },
+  "mixins": [
+    "enderdev-cosmetics.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "fabric-api": "*",
+    "minecraft": "1.21.1"
+  }
+}
